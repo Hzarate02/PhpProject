@@ -1,0 +1,59 @@
+# ==========================================================
+# CONFIGURACIÓN DEL ARCHIVO .HTACCESS
+# ==========================================================
+# Este archivo permite configurar el comportamiento de Apache
+# dentro de la carpeta principal del proyecto.
+# ==========================================================
+
+
+# ==========================================================
+# 1. DESHABILITAR LA VISUALIZACIÓN DE CARPETAS
+# ==========================================================
+# Evita que Apache muestre al usuario el contenido de las
+# carpetas cuando no existe un archivo index dentro de ellas.
+#
+# Por ejemplo:
+# http://localhost/mi-proyecto/Modelos/
+#
+# En lugar de mostrar todos los archivos de la carpeta,
+# Apache impedirá la visualización de su contenido.
+# ==========================================================
+Options All -Indexes
+
+
+# ==========================================================
+# 2. ACTIVAR EL MOD_REWRITE
+# ==========================================================
+# Habilita el módulo de Apache encargado de modificar y
+# redireccionar internamente las URL del proyecto.
+#
+# Esto nos permite utilizar URLs amigables, por ejemplo:
+#
+# http://localhost/mi-proyecto/usuarios
+#
+# En lugar de utilizar:
+#
+# http://localhost/mi-proyecto/index.php?ruta=usuarios
+# ==========================================================
+RewriteEngine On
+
+
+# ==========================================================
+# 3. REGLA DE REESCRITURA DE URL
+# ==========================================================
+# Esta regla captura la palabra o ruta que el usuario coloca
+# después del nombre de nuestro proyecto y la envía al archivo
+# index.php mediante el parámetro "ruta".
+#
+# Ejemplo:
+#
+# URL que escribe el usuario:
+# http://localhost/mi-proyecto/usuarios
+#
+# Apache la procesa internamente como:
+# index.php?ruta=usuarios
+#
+# De esta manera, index.php será el encargado de determinar
+# qué controlador o sección del sistema debe mostrar.
+# ==========================================================
+RewriteRule ^([-a-zA-Z0-9]+)$ index.php?ruta=$1
