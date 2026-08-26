@@ -12,7 +12,7 @@
     <!-- logo normal -->
     <span class="logo-lg">
         <img src="vistas/img/plantilla/icono-blanco-lineal.png" 
-        class="img-responsive" style="padding: 5px 0px">
+        class="img-responsive" style="padding: 0px 0px">
     </span>
  </a>
 

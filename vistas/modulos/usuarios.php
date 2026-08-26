@@ -26,7 +26,7 @@
 
         <div class="box-body">
           
-            <table class="table table-bordered table-striped dt-responsive tablas">
+            <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
 
               <thead>
 
@@ -65,13 +65,28 @@
                   echo '<td><img src="vistas/img/usuarios/default/anonymous.png" class="img-thumbnail" width="40px"></td>';
                 }
 
-                echo '<td>' . $value["perfil"] . '</td>
-                      <td><button class="btn btn-success btn-xs">Activado</button></td>
-                      <td>' . $value["ultimo_login"] . '</td>
+                echo '<td>' . $value["perfil"] . '</td>';
+
+                if($value["estado"] != 0){
+
+                  echo '<td><button class="btn btn-success btn-xs btnActivar" idUsuario="'.$value["id"].'" estadoUsuario="0">Activado</button></td>';
+                  
+                }else{
+
+                  echo '<td><button class="btn btn-danger btn-xs btnActivar" idUsuario="'.$value["id"].'" estadoUsuario="1">Desactivado</button></td>';
+
+                }
+
+                      echo '<td>' . $value["ultimo_login"] . '</td>
+
                       <td>
+
                         <div class="btn-group">
+
                           <button class="btn btn-warning btnEditarUsuario" idUsuario="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarUsuario"><i class="fa fa-pencil"></i></button>
-                          <button class="btn btn-danger"><i class="fa fa-times"></i></button>
+                          
+                          <button class="btn btn-danger btnEliminarUsuario" idUsuario="'.$value["id"].'" fotoUsuario="'.$value["foto"].'" usuario="'.$value["usuario"].'"><i class="fa fa-times"></i></button>
+
                         </div>
                       </td>
                     </tr>';
@@ -149,8 +164,7 @@
 
                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                <input type="text" class="form-control input-lg" name="nuevoUsuario" 
-                placeholder="Ingresar usuario" required>
+                <input type="text" class="form-control input-lg" id="nuevoUsuario" name="nuevoUsuario" placeholder="Ingresar usuario" required>
 
               </div>
 
@@ -394,4 +408,9 @@
   </div>
 
 </div>
+
+<?php
+  $borrarUsuario = new ControladorUsuarios();
+  $borrarUsuario -> ctrBorrarUsuario();
+?>
 

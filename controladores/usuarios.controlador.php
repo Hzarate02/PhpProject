@@ -4,10 +4,10 @@ class ControladorUsuarios{
 //=============================================
 //INGRESO DE USUARIO
 //=============================================
-        public static function ctrIngresoUsuario(){
+    public static function ctrIngresoUsuario(){
 
-            if(isset($_POST["ingUsuario"])){
-                if(preg_Match('/^[a-zA-Z0-9]+$/', $_POST["ingUsuario"]) && 
+        if(isset($_POST["ingUsuario"])){
+            if(preg_Match('/^[a-zA-Z0-9]+$/', $_POST["ingUsuario"]) && 
                 preg_match('/^[a-zA-Z0-9]+$/', $_POST["ingPassword"])){
 
                 $encriptar = crypt($_POST["ingPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
@@ -22,27 +22,54 @@ class ControladorUsuarios{
                     if($respuesta["usuario"] == $_POST["ingUsuario"] && 
                     $respuesta["password"] == $encriptar){
 
+                    if($respuesta["estado"] == 1){
+
                         $_SESSION["iniciarSesion"] = "ok";
                         $_SESSION["id"] = $respuesta["id"];
                         $_SESSION["nombre"] = $respuesta["nombre"];
                         $_SESSION["usuario"] = $respuesta["usuario"];
                         $_SESSION["foto"] = $respuesta["foto"];
                         $_SESSION["perfil"] = $respuesta["perfil"];
-                        
 
+                        /*========================
+                        REGISTRAR FECHA DE ÚLTIMO LOGIN
+                        ===========================*/
 
-                        echo '<script>
+                        date_default_timezone_set("America/Mexico_City");
 
-                            window.location = "inicio";
+                        $fecha = date('Y-m-d');
+                        $hora = date('H:i:s');
 
-                        </script>';
+                        $fechaActual = $fecha. ' '.$hora;
+
+                        $item1 = "ultimo_login";
+                        $valor1 = $fechaActual;
+
+                        $item2 = "id";
+                        $valor2 = $respuesta["id"];
+
+                        $ultimoLogin = ModeloUsuarios::mdlActualizarUsuario($tabla, $item1, $valor1, $item2, $valor2);
+
+                            if($ultimoLogin == "ok"){
+
+                            echo '<script>
+                                
+                                window.location = "inicio";
+
+                                </script>';
+
+                            }
 
                         }else{
+                            echo'<br><div class="alert alert-danger">El usuario aún no está activado</div>';
+                        }
+
+                    }else{
                         echo '<br><div class="alert alert-danger">Error al ingresar, vuelve a intentarlo</div>';
-                    }
                 }
             }
         }
+    }
 
         /*=============================================
         REGISTRAR USUARIOS
@@ -215,6 +242,7 @@ class ControladorUsuarios{
                 $ruta = $_POST["fotoActual"];
 
                 if(isset($_FILES["editarFoto"]["tmp_name"]) && 
+
                 !empty($_FILES["editarFoto"]["tmp_name"])){
 
                     list($ancho, $alto) = getimagesize($_FILES["editarFoto"]["tmp_name"]);
@@ -229,11 +257,15 @@ class ControladorUsuarios{
                     $directorio = "vistas/img/usuarios/".$_POST["editarUsuario"];
 
                     if(!empty($_POST["fotoActual"])){
+
                         unlink($_POST["fotoActual"]);
+
                     }
 
                     if(!file_exists($directorio)){
+
                         mkdir($directorio, 0755, true);
+
                     }
 
                     /*========================================
@@ -435,5 +467,70 @@ class ControladorUsuarios{
 
             }
         }
+    }
+
+
+    /*===========================
+    BORRAR USUARIO
+    =============================*/
+
+    public static function ctrBorrarUsuario(){
+
+        if(isset($_GET["idUsuario"])){
+
+            $tabla = "usuarios";
+            $datos = $_GET["idUsuario"];
+
+            /*========================================
+            ELIMINAR FOTO Y CARPETA DEL USUARIO
+            ========================================*/
+
+            if(isset($_GET["fotoUsuario"]) && $_GET["fotoUsuario"] != ""){
+
+                unlink($_GET["fotoUsuario"]);
+
+                if(isset($_GET["usuario"]) && $_GET["usuario"] != ""){
+
+                    rmdir("vistas/img/usuarios/".$_GET["usuario"]);
+
+                }
+
+            }
+
+            /*========================================
+            ELIMINAR USUARIO DE LA BASE DE DATOS
+            ========================================*/
+
+            $respuesta = ModeloUsuarios::mdlBorrarUsuario($tabla, $datos);
+
+            /*========================================
+            MOSTRAR MENSAJE
+            ========================================*/
+
+            if($respuesta == "ok"){
+
+                echo '<script>
+
+                    Swal.fire({
+                        icon: "success",
+                        title: "¡Usuario eliminado!",
+                        text: "El usuario ha sido borrado exitosamente.",
+                        confirmButtonText: "Cerrar"
+                    }).then((result) => {
+
+                        if(result.isConfirmed){
+
+                            window.location = "usuarios";
+
+                        }
+
+                    });
+
+                </script>';
+
+            }
+
+        }
+
     }
 }
