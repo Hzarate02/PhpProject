@@ -5,89 +5,95 @@ require_once "../modelos/usuarios.modelo.php";
 
 class AjaxUsuarios{
 
-    /*=============================================
-    EDITAR USUARIO
-    =============================================*/	
-    public $idUsuario;
+	/*=============================================
+	EDITAR USUARIO
+	=============================================*/	
 
-    public function ajaxEditarUsuario(){
+	public $idUsuario;
 
-        $item = "id";
-        $valor = $this->idUsuario;
+	public function ajaxEditarUsuario(){
 
-        $respuesta = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
+		$item = "id";
+		$valor = $this->idUsuario;
 
-        echo json_encode($respuesta);
+		$respuesta = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
 
-    }
+		echo json_encode($respuesta);
 
-    /*================================
-    ACTIVAR USUARIO
-    ===============================*/
+	}
 
-    public $activarUsuario;
-    public $activarId;
+	/*=============================================
+	ACTIVAR USUARIO
+	=============================================*/	
 
-    public function ajaxActivarUsuario(){
+	public $activarUsuario;
+	public $activarId;
 
-        $tabla = "usuarios";
 
-        $item1 = "estado";
-        $valor1 = $this->activarUsuario;
+	public function ajaxActivarUsuario(){
 
-        $item2 = "id";
-        $valor2 = $this->activarId;
+		$tabla = "usuarios";
 
-        echo "ID: ".$valor2."<br>";
-        echo "ESTADO: ".$valor1."<br>";
+		$item1 = "estado";
+		$valor1 = $this->activarUsuario;
 
-        $respuesta = ModeloUsuarios::mdlActualizarUsuario(
-            $tabla,
-            $item1,
-            $valor1,
-            $item2,
-            $valor2
-        );
+		$item2 = "id";
+		$valor2 = $this->activarId;
 
-    }
+		$respuesta = ModeloUsuarios::mdlActualizarUsuario($tabla, $item1, $valor1, $item2, $valor2);
 
-    /*==========================================
-    VALIDAR NO REPETIR USUARIO
-    ==========================================*/
+	}
 
-    public static $validarUsuario;
+	/*=============================================
+	VALIDAR NO REPETIR USUARIO
+	=============================================*/	
 
-    public function ajaxValidarUsuario(){
+	public $validarUsuario;
 
-        $item = "usuario";
-        $valor = $this->validarUsuario;
+	public function ajaxValidarUsuario(){
 
-        $respuesta = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
+		$item = "usuario";
+		$valor = $this->validarUsuario;
 
-        echo json_encode($respuesta);
-    }
+		$respuesta = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
+
+		echo json_encode($respuesta);
+
+	}
 }
 
+/*=============================================
+EDITAR USUARIO
+=============================================*/
 if(isset($_POST["idUsuario"])){
 
-    $editar = new AjaxUsuarios();
-    $editar -> idUsuario = $_POST["idUsuario"];
-    $editar -> ajaxEditarUsuario();
+	$editar = new AjaxUsuarios();
+	$editar -> idUsuario = $_POST["idUsuario"];
+	$editar -> ajaxEditarUsuario();
 
 }
+
+/*=============================================
+ACTIVAR USUARIO
+=============================================*/	
 
 if(isset($_POST["activarUsuario"])){
-    $activarUsuario = new AjaxUsuarios();
-    $activarUsuario -> activarUsuario = $_POST["activarUsuario"];
-    $activarUsuario -> activarId = $_POST["activarId"];
-    $activarUsuario -> ajaxActivarUsuario();
+
+	$activarUsuario = new AjaxUsuarios();
+	$activarUsuario -> activarUsuario = $_POST["activarUsuario"];
+	$activarUsuario -> activarId = $_POST["activarId"];
+	$activarUsuario -> ajaxActivarUsuario();
+
 }
 
-if(isset($_POST["validarUsuario"])){
+/*=============================================
+VALIDAR NO REPETIR USUARIO
+=============================================*/
 
-    $valUsuario = new AjaxUsuarios();
-    $valUsuario -> validarUsuario = $_POST["validarUsuario"];
-    $valUsuario -> ajaxValidarUsuario();
+if(isset( $_POST["validarUsuario"])){
+
+	$valUsuario = new AjaxUsuarios();
+	$valUsuario -> validarUsuario = $_POST["validarUsuario"];
+	$valUsuario -> ajaxValidarUsuario();
+
 }
-
-?>

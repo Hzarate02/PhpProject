@@ -19,7 +19,7 @@
       <div class="box">
 
         <div class="box-header with-border">
-           <button class=""btn btn-primary" data-toggle="modal" 
+           <button class="btn btn-primary" data-toggle="modal" 
            data-target="#modalAgregarCategoria">
             Agregar categoría
           </button>
