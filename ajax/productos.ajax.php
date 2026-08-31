@@ -6,64 +6,75 @@ require_once "../modelos/productos.modelo.php";
 require_once "../controladores/categorias.controlador.php";
 require_once "../modelos/categorias.modelo.php";
 
-class AjaxProductos{
 
-  /*=============================================
-  GENERAR CÓDIGO A PARTIR DE ID CATEGORIA
-  =============================================*/
-  public $idCategoria;
+class AjaxProductos
+{
 
-  public function ajaxCrearCodigoProducto(){
+    /*=============================================
+    GENERAR CÓDIGO A PARTIR DE ID CATEGORIA
+    =============================================*/
 
-    $item = "id_categoria";
-    $valor = $this->idCategoria;
+    public $idCategoria;
 
-    $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor);
+    public function ajaxCrearCodigoProducto()
+    {
 
-    echo json_encode($respuesta);
+        $item = "id_categoria";
+        $valor = $this->idCategoria;
 
-  }
+        $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor);
+
+        echo json_encode($respuesta);
+
+    }
 
 
-  /*=============================================
-  EDITAR PRODUCTO
-  =============================================*/ 
+    /*=============================================
+    EDITAR PRODUCTO
+    =============================================*/
 
-  public $idProducto;
+    public $idProducto;
 
-  public function ajaxEditarProducto(){
+    public function ajaxEditarProducto()
+    {
 
-    $item = "id";
-    $valor = $this->idProducto;
+        $item = "id";
+        $valor = $this->idProducto;
 
-    $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor);
+        $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor);
 
-    echo json_encode($respuesta);
+        echo json_encode($respuesta);
 
-  }
+    }
 
 }
 
 
 /*=============================================
 GENERAR CÓDIGO A PARTIR DE ID CATEGORIA
-=============================================*/ 
+=============================================*/
 
-if(isset($_POST["idCategoria"])){
+if (isset($_POST["idCategoria"])) {
 
-  $codigoProducto = new AjaxProductos();
-  $codigoProducto -> idCategoria = $_POST["idCategoria"];
-  $codigoProducto -> ajaxCrearCodigoProducto();
+    $codigoProducto = new AjaxProductos();
+
+    $codigoProducto->idCategoria = $_POST["idCategoria"];
+
+    $codigoProducto->ajaxCrearCodigoProducto();
 
 }
+
+
 /*=============================================
 EDITAR PRODUCTO
-=============================================*/ 
+=============================================*/
 
-if(isset($_POST["idProducto"])){
+if (isset($_POST["idProducto"])) {
 
-  $editarProducto = new AjaxProductos();
-  $editarProducto -> idProducto = $_POST["idProducto"];
-  $editarProducto -> ajaxEditarProducto();
+    $editarProducto = new AjaxProductos();
+
+    $editarProducto->idProducto = $_POST["idProducto"];
+
+    $editarProducto->ajaxEditarProducto();
 
 }

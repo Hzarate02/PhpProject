@@ -16,7 +16,7 @@ $(".nuevaFoto").change(function(){
 
         swal.fire({
             icon: "error",
-            title: "¡Error al subir la imagen!",
+            title: "¡Error al subir la foto!",
             text: "¡La imagen debe estar en formato JPG o PNG!",
             showConfirmButton: true,
             confirmButtonText: "Cerrar"
@@ -27,7 +27,7 @@ $(".nuevaFoto").change(function(){
 
         swal.fire({
             icon: "error",
-            title: "¡Error al subir la imagen!",
+            title: "¡Error al subir la foto!",
             text: "¡La imagen no debe de pesar más de 2MB!",
             showConfirmButton: true,
             confirmButtonText: "Cerrar"
