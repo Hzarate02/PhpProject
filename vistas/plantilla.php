@@ -70,12 +70,16 @@
   <script src="vistas/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
   <script src="vistas/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
 
-
   <!-- SweetAlert 2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- iCheck 1.0.1 -->
 <script src="vistas/plugins/iCheck/icheck.min.js"></script>
+
+<!-- InputMask -->
+<script src="vistas/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="vistas/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="vistas/plugins/input-mask/jquery.inputmask.extensions.js"></script>
 
 </head>
 
@@ -135,5 +139,6 @@
 <script src="vistas/js/usuarios.js"></script>
 <script src="vistas/js/categorias.js"></script>
 <script src="vistas/js/productos.js"></script>
+<script src="vistas/js/clientes.js"></script>
 </body>
 </html>

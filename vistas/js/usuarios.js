@@ -212,7 +212,7 @@ $(document).on("click", ".btnEliminarUsuario", function(){
     fotoUsuario = $(this).attr("fotoUsuario");
     usuario = $(this).attr("usuario");
 
-    swal.fire({
+    Swal.fire({
         title: '¿Está seguro de borrar el usuario?',
         text: "¡Si no lo está puede cancelar la acción!",
         icon: "warning",
