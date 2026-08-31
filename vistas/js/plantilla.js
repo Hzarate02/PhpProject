@@ -42,3 +42,19 @@ $('.tablas').DataTable({
       checkboxClass: 'icheckbox_minimal-blue',
       radioClass   : 'iradio_minimal-blue'
     });
+
+/*=============================================
+SIDEBAR RESPONSIVE
+=============================================*/
+
+$(document).on('click', '.sidebar-toggle', function(e){
+
+    if($(window).width() < 768){
+
+        e.preventDefault();
+
+        $('body').toggleClass('sidebar-open');
+
+    }
+
+});
