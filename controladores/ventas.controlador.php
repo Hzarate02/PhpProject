@@ -41,8 +41,8 @@ public static function ctrMostrarVentas($item, $valor){
 
                     echo'<script>
 
-                    swal({
-                          type: "success",
+                    Swal.fire({
+                          icon: "success",
                           title: "La venta ha sido guardada correctamente",
                           showConfirmButton: true,
                           confirmButtonText: "Cerrar"
@@ -62,8 +62,8 @@ public static function ctrMostrarVentas($item, $valor){
 
                 echo'<script>
 
-                    swal({
-                          type: "error",
+                    Swal.fire({
+                          icon: "error",
                           title: "¡La venta no puede ir vacía o llevar caracteres especiales!",
                           showConfirmButton: true,
                           confirmButtonText: "Cerrar"

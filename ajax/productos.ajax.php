@@ -6,75 +6,113 @@ require_once "../modelos/productos.modelo.php";
 require_once "../controladores/categorias.controlador.php";
 require_once "../modelos/categorias.modelo.php";
 
+class AjaxProductos{
 
-class AjaxProductos
-{
+  /*=============================================
+  GENERAR CÓDIGO A PARTIR DE ID CATEGORIA
+  =============================================*/
+  public $idCategoria;
 
-    /*=============================================
-    GENERAR CÓDIGO A PARTIR DE ID CATEGORIA
-    =============================================*/
+  public function ajaxCrearCodigoProducto(){
 
-    public $idCategoria;
+  	$item = "id_categoria";
+  	$valor = $this->idCategoria;
 
-    public function ajaxCrearCodigoProducto()
-    {
+  	$respuesta = ControladorProductos::ctrMostrarProductos($item, $valor);
 
-        $item = "id_categoria";
-        $valor = $this->idCategoria;
+  	echo json_encode($respuesta);
 
-        $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor);
+  }
 
-        echo json_encode($respuesta);
+
+  /*=============================================
+  EDITAR PRODUCTO
+  =============================================*/ 
+
+  public $idProducto;
+  public $traerProductos;
+  public $nombreProducto;
+
+  public function ajaxEditarProducto(){
+
+    if($this->traerProductos == "ok"){
+
+      $item = null;
+      $valor = null;
+
+      $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor);
+
+      echo json_encode($respuesta);
+
+
+    }else if($this->nombreProducto != ""){
+
+      $item = "descripcion";
+      $valor = $this->nombreProducto;
+
+      $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor);
+
+      echo json_encode($respuesta);
+
+    }else{
+
+      $item = "id";
+      $valor = $this->idProducto;
+
+      $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor);
+
+      echo json_encode($respuesta);
 
     }
 
-
-    /*=============================================
-    EDITAR PRODUCTO
-    =============================================*/
-
-    public $idProducto;
-
-    public function ajaxEditarProducto()
-    {
-
-        $item = "id";
-        $valor = $this->idProducto;
-
-        $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor);
-
-        echo json_encode($respuesta);
-
-    }
+  }
 
 }
 
 
 /*=============================================
 GENERAR CÓDIGO A PARTIR DE ID CATEGORIA
-=============================================*/
+=============================================*/	
 
-if (isset($_POST["idCategoria"])) {
+if(isset($_POST["idCategoria"])){
 
-    $codigoProducto = new AjaxProductos();
+	$codigoProducto = new AjaxProductos();
+	$codigoProducto -> idCategoria = $_POST["idCategoria"];
+	$codigoProducto -> ajaxCrearCodigoProducto();
 
-    $codigoProducto->idCategoria = $_POST["idCategoria"];
+}
+/*=============================================
+EDITAR PRODUCTO
+=============================================*/ 
 
-    $codigoProducto->ajaxCrearCodigoProducto();
+if(isset($_POST["idProducto"])){
+
+  $editarProducto = new AjaxProductos();
+  $editarProducto -> idProducto = $_POST["idProducto"];
+  $editarProducto -> ajaxEditarProducto();
 
 }
 
+/*=============================================
+TRAER PRODUCTO
+=============================================*/ 
+
+if(isset($_POST["traerProductos"])){
+
+  $traerProductos = new AjaxProductos();
+  $traerProductos -> traerProductos = $_POST["traerProductos"];
+  $traerProductos -> ajaxEditarProducto();
+
+}
 
 /*=============================================
-EDITAR PRODUCTO
-=============================================*/
+TRAER PRODUCTO
+=============================================*/ 
 
-if (isset($_POST["idProducto"])) {
+if(isset($_POST["nombreProducto"])){
 
-    $editarProducto = new AjaxProductos();
-
-    $editarProducto->idProducto = $_POST["idProducto"];
-
-    $editarProducto->ajaxEditarProducto();
+  $traerProductos = new AjaxProductos();
+  $traerProductos -> nombreProducto = $_POST["nombreProducto"];
+  $traerProductos -> ajaxEditarProducto();
 
 }
